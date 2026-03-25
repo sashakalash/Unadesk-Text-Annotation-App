@@ -1,0 +1,37 @@
+<div class="article-list">
+  <div class="article-list-header">
+    <h2>Articles</h2>
+    <button class="primary" (click)="onCreate()">New Article</button>
+  </div>
+
+  @if (articles$ | async; as articles) {
+    <div class="article-list-content">
+      @if (articles.length === 0) {
+        <div class="empty-state">
+          <p>No articles yet. Create one to get started.</p>
+        </div>
+      }
+
+      @if (articles.length > 0) {
+        <div class="article-items">
+          @for (article of articles; track article.id) {
+            <div class="article-item">
+              <div class="article-info">
+                <h3>{{ article.title }}</h3>
+                <p class="article-preview">{{ article.body.slice(0, 100) }}...</p>
+                <time class="article-date">{{
+                  article.updatedAt | date: 'short' : undefined : 'ru'
+                }}</time>
+              </div>
+              <div class="article-actions">
+                <button class="secondary" (click)="onView(article.id)">View</button>
+                <button class="secondary" (click)="onEdit(article.id)">Edit</button>
+                <button class="danger" (click)="onDelete(article)">Delete</button>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+</div>

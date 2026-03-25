@@ -1,0 +1,44 @@
+@if (position) {
+  <div
+    class="color-picker"
+    [style.left.px]="position.x"
+    [style.top.px]="position.y"
+    (click)="$event.stopPropagation()"
+    (keydown.escape)="onCancel()"
+    tabindex="0"
+    role="dialog"
+  >
+    <div class="picker-header">
+      <span>Add Annotation</span>
+    </div>
+
+    <div class="color-swatches">
+      @for (color of colors; track color) {
+        <button
+          class="color-swatch"
+          [style.background-color]="color"
+          [class.active]="selectedColor() === color"
+          (click)="selectedColor.set(color)"
+          (keydown.space)="selectedColor.set(color)"
+          tabindex="0"
+          [attr.aria-label]="'Select color ' + color"
+        ></button>
+      }
+    </div>
+
+    <div class="note-input">
+      <textarea
+        [(ngModel)]="note"
+        name="note"
+        placeholder="Add a note..."
+        (keydown.enter.ctrl)="onConfirm()"
+      ></textarea>
+    </div>
+
+    <div class="picker-actions">
+      <button class="secondary" (click)="onCancel()">Cancel</button>
+      <button class="secondary" (click)="onQuickUnderline()">Underline</button>
+      <button class="primary" (click)="onConfirm()" [disabled]="!note().trim()">Add Note</button>
+    </div>
+  </div>
+}

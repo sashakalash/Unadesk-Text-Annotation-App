@@ -1,0 +1,8 @@
+<div class="spinner-wrapper" [class]="'spinner-' + size">
+  <div class="spinner" role="status" aria-label="Loading">
+    <div class="spinner-ring"></div>
+  </div>
+  @if (message) {
+    <p class="spinner-message">{{ message }}</p>
+  }
+</div>

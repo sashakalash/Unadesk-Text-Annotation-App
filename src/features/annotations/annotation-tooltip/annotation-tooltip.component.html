@@ -1,0 +1,6 @@
+@if (annotation && position && annotation.note) {
+  <div class="tooltip" role="tooltip" [style.left.px]="position.x" [style.top.px]="position.y">
+    <div class="tooltip-color" [style.background-color]="annotation.color"></div>
+    <div class="tooltip-text">{{ annotation.note }}</div>
+  </div>
+}

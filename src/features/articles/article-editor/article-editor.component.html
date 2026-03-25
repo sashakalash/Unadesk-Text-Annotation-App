@@ -1,0 +1,39 @@
+<div class="article-editor">
+  @if (isLoading()) {
+    <app-spinner message="Loading..."></app-spinner>
+  } @else {
+    <div class="editor-content">
+      <h2>{{ isEditMode() ? 'Edit Article' : 'New Article' }}</h2>
+
+      <form (ngSubmit)="onSubmit()" class="editor-form">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input
+            id="title"
+            type="text"
+            [(ngModel)]="title"
+            name="title"
+            placeholder="Article title"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="body">Content</label>
+          <textarea
+            id="body"
+            [(ngModel)]="body"
+            name="body"
+            placeholder="Article content..."
+            required
+          ></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="secondary" (click)="onCancel()">Cancel</button>
+          <button type="submit" class="primary">{{ isEditMode() ? 'Update' : 'Create' }}</button>
+        </div>
+      </form>
+    </div>
+  }
+</div>

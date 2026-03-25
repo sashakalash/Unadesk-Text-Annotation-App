@@ -1,0 +1,46 @@
+<div class="article-viewer">
+  @if (article()) {
+    <div class="viewer-content">
+      <div class="viewer-header">
+        <button class="secondary" (click)="goBack()">← Back</button>
+        <h2>{{ article()?.title }}</h2>
+        <div style="width: 100px"></div>
+      </div>
+
+      <div
+        class="article-text"
+        #textContainer
+        (mouseup)="onTextMouseUp()"
+        (mousedown)="onAnnotationLeave()"
+      >
+        @for (segment of segments(); track $index) {
+          <span
+            [class.annotated]="segment.annotations.length > 0"
+            [style]="getAnnotationStyle(segment.annotations)"
+            (mouseenter)="
+              segment.annotations.length ? onAnnotationHover($event, segment.annotations[0]) : null
+            "
+            (mouseleave)="onAnnotationLeave()"
+            >{{ segment.text }}</span
+          >
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="empty-state">
+      <p>Article not found</p>
+      <button class="secondary" (click)="goBack()">Back to Articles</button>
+    </div>
+  }
+
+  <app-annotation-color-picker
+    [position]="pickerPosition()"
+    (confirmAnnotation)="onPickerConfirm($event)"
+    (cancelAnnotation)="onPickerCancel()"
+  ></app-annotation-color-picker>
+
+  <app-annotation-tooltip
+    [annotation]="hoveredAnnotation()"
+    [position]="tooltipPosition()"
+  ></app-annotation-tooltip>
+</div>
